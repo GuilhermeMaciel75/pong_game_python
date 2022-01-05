@@ -16,9 +16,13 @@ class Player(pg.sprite.Sprite):
 
         #"system" Atributes
         self.win =  win
-        self.x = x
-        self.y = y
 
+        self.image = pg.Surface([15, 135])
+        self.image.fill(color)
+        self.rect = self.image.get_rect()
+        self.rect.y = y
+        self.rect.x = x
+    
         #movimentation Atributes 
         self.down = down
         self.up = up
@@ -28,17 +32,26 @@ class Player(pg.sprite.Sprite):
         self.color = color
 
     #Rect move 
-    def move(self):
+    def move(self, list_wall):
 
         key = pg.key.get_pressed()
 
         if key[self.down]:
-            self.y -= self.velocity 
+            self.rect.y += self.velocity 
+
+            list_colision = pg.sprite.spritecollide(self, list_wall, False)
+            for colision in list_colision:
+                self.rect.bottom = colision.rect.top
+
 
         elif key[self.up]:
-            self.y += self.velocity
+            self.rect.y -= self.velocity
+            
+            list_colision = pg.sprite.spritecollide(self, list_wall, False)
+            for colision in list_colision:
+                self.rect.top = colision.rect.bottom
 
 
     def drawn(self):
         
-        pg.draw.rect(self.win, self.color, ((self.x, self.y),(15, 135)))
+        pg.draw.rect(self.win, self.color, self)
