@@ -11,8 +11,8 @@ class Ball(pg.sprite.Sprite):
         self.rect.x = x
         self.win = win
 
-        self.velocity_x = 5
-        self.velocity_y = 5
+        self.velocity_x = 1
+        self.velocity_y = 1
 
  
     def set_velocity_x(self, value):
@@ -32,15 +32,18 @@ class Ball(pg.sprite.Sprite):
                 self.velocity_y *= -1
 
         
-            if self.rect.left <= 64 or self.rect.right >= 900 or pg.sprite.spritecollide(self, list_rect, False):
+            elif self.rect.left <= 63 or self.rect.right >= 1024: 
                 self.velocity_x *= -1
 
+            elif pg.sprite.spritecollide(self, list_rect, False):
+                pass
 
-        elif self.rect.left <= 64:
+
+        elif self.rect.left <= 64 and 576 >= self.rect.top >= 256:
             
             return 'rect1'
         
-        elif self.rect.right >= 900:
+        elif self.rect.right >= 1024 and 576 >= self.rect.top >= 344:
 
             return 'rect2'
 

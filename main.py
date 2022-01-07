@@ -17,7 +17,6 @@ def main():
 
     rect1 = Player(screen, 124, 300, pg.K_s, pg.K_w, (255, 0, 0))
     rect2 = Player(screen, 900, 300, pg.K_DOWN, pg.K_UP, (0, 0, 255))
-    ball = Ball(screen, 512, 300)
 
     list_rect = pg.sprite.Group()
     list_rect.add(rect1)
@@ -26,45 +25,51 @@ def main():
     #Create de Map
     mapa = Map()
     
-    #Loop responsible for make the game runs infinitely
-    game_loop = True
+    
 
     #Principal loop
-    while game_loop:
+    while (rect1.get_score < 10) and (rect2.get_score < 10):
+        
+        game_loop = True
         clock.tick(30)
-        
+        ball = Ball(screen, 512, randint(20, 700))
 
-        for event in pg.event.get():
+        while True:
             
-            if event.type == pg.QUIT:
-                game_loop = False
+            for event in pg.event.get():
+                
+                if event.type == pg.QUIT:
+                    rect1.set_score = 10
+                    game_loop = False
+                    break
 
 
-        rect1.move(mapa.wall_list)
-        rect2.move(mapa.wall_list)
-        result = ball.movimentation(mapa.wall_list, list_rect)
+            rect1.move(mapa.wall_list)
+            rect2.move(mapa.wall_list)
+            result = ball.movimentation(mapa.wall_list, list_rect)
 
-        
 
-        if result != False:
-            if result == 'rect1':
-                rect1.set_score = 1
+            if result != False:
+                if result == 'rect1':
+                    rect1.set_score = 1
 
-            elif result == 'rect2':
-                rect2.set_score = 1
-        
+                elif result == 'rect2':
+                    rect2.set_score = 1
 
-        screen.fill((40,40,40))
+                break
+            
 
-        show_pontuation(rect1, rect2, screen)
+            screen.fill((40,40,40))
 
-        mapa.wall_list.draw(screen)
-        mapa.wall_list_no_colision.draw(screen)
-        ball.drawn()
-        rect1.drawn()
-        rect2.drawn()
+            show_pontuation(rect1, rect2, screen)
 
-        pg.display.flip()
+            mapa.wall_list.draw(screen)
+            mapa.wall_list_no_colision.draw(screen)
+            ball.drawn()
+            rect1.drawn()
+            rect2.drawn()
+
+            pg.display.flip()
 
 
 if __name__ == '__main__':

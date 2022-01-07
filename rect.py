@@ -28,7 +28,7 @@ class Player(pg.sprite.Sprite):
         self.up = up
 
         #Rect atributes
-        self.velocity = 7
+        self.velocity = 1
         self.color = color
         self._score = 0
 
