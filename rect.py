@@ -27,9 +27,18 @@ class Player(pg.sprite.Sprite):
         self.down = down
         self.up = up
 
-        #Car atributes
+        #Rect atributes
         self.velocity = 7
         self.color = color
+        self._score = 0
+
+    @property
+    def get_score(self):
+        return self._score
+
+    @get_score.setter
+    def set_score(self, value):
+        self._score += value 
 
     #Rect move 
     def move(self, list_wall):
